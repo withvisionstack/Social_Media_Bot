@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root { --azul-profundo:#031231; --azul-escuro:#07264d; --ardosia:#2d374d;
+          --preto-azulado:#0c0c13; --destaque:#38C95D; --azul-vivo:#0F57DB; }
+  * { margin: 0; box-sizing: border-box; }
+  body { width:{{ w }}px; height:{{ h }}px; overflow:hidden; position:relative;
+    font-family:'Poppins',sans-serif; color:#fff;
+    background: var(--preto-azulado){% if imagens.fundo %} url('{{ imagens.fundo }}') center / cover{% endif %}; }
+  .sombra { position:absolute; inset:0;
+    background:linear-gradient(to bottom, rgba(3,18,49,.92), rgba(7,38,77,.94) 50%, rgba(3,18,49,.98)); }
+
+  .topo { position:absolute; top:70px; left:90px; right:90px; display:flex; justify-content:space-between; align-items:center; }
+  .logo { width:90px; height:90px; border-radius:50%; background:#fff; border:5px solid var(--destaque);
+    overflow:hidden; display:flex; align-items:center; justify-content:center; }
+  .logo img { width:100%; height:100%; object-fit:contain; padding:12px; }
+  .contador { padding:12px 34px; border-radius:100px; background:rgba(45,55,77,.8);
+    font-size:30px; font-weight:700; color:#b9bec7; }
+
+  .foto { position:absolute; top:200px; left:90px; width:900px; height:480px; border-radius:32px;
+    background:#000 url('{{ imagens.foto }}') center / cover; border:3px solid var(--ardosia);
+    box-shadow:0 30px 60px rgba(0,0,0,.45); }
+  .num { position:absolute; top:230px; left:120px; padding:6px 30px; border-radius:20px;
+    background:rgba(3,18,49,.88); border:3px solid var(--destaque);
+    font-size:72px; font-weight:800; line-height:1.2; color:var(--destaque); }
+
+  .corpo { position:absolute; left:90px; right:90px; top:730px; }
+  .barra { width:110px; height:10px; border-radius:5px; margin-bottom:30px;
+    background:linear-gradient(90deg, var(--azul-vivo), var(--destaque)); }
+  h1 { font-size:66px; line-height:1.1; font-weight:800; letter-spacing:-1px; }
+  p { margin-top:26px; font-size:38px; line-height:1.38; opacity:.9; }
+
+  .rodape { position:absolute; left:90px; right:90px; bottom:60px; padding-top:22px;
+    border-top:2px solid var(--ardosia); display:flex; justify-content:space-between;
+    font-size:30px; font-weight:700; color:#b9bec7; }
+  .seta { color:var(--destaque); }
+</style>
+</head>
+<body>
+  <div class="sombra"></div>
+  <div class="topo">
+    <div class="logo">{% if imagens.logo %}<img src="{{ imagens.logo }}">{% endif %}</div>
+    <div class="contador">{{ numero }}/{{ total }}</div>
+  </div>
+  <div class="foto"></div>
+  <div class="num">{{ '%02d' % numero }}</div>
+  <div class="corpo">
+    <div class="barra"></div>
+    <h1>{{ post.titulo }}</h1>
+    <p>{{ post.texto }}</p>
+  </div>
+  <div class="rodape"><span>{{ marca }}</span><span class="seta">{% if numero < total %}Arraste →{% else %}Salve este post{% endif %}</span></div>
+</body>
+</html>

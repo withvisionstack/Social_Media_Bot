@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --azul-profundo: #031231; --azul-escuro: #07264d; --ardosia: #2d374d;
+    --preto-azulado: #0c0c13; --destaque: #38C95D; --azul-vivo: #0F57DB;
+  }
+  * { margin: 0; box-sizing: border-box; }
+  body {
+    width: {{ w }}px; height: {{ h }}px; overflow: hidden; position: relative;
+    font-family: 'Poppins', sans-serif; color: #fff;
+    background: var(--preto-azulado){% if imagens.fundo %} url('{{ imagens.fundo }}') center / cover{% endif %};
+  }
+  .sombra { position: absolute; inset: 0;
+    background: linear-gradient(to bottom, rgba(3,18,49,.80), rgba(7,38,77,.88) 55%, rgba(3,18,49,.97)); }
+
+  .foto { position: absolute; top: 100px; left: 90px; width: 900px; height: 560px;
+    border-radius: 36px; background: #000 url('{{ imagens.foto }}') center / cover;
+    border: 3px solid var(--ardosia); box-shadow: 0 30px 60px rgba(0,0,0,.45); }
+
+  .selo { position: absolute; top: 585px; left: 465px; width: 150px; height: 150px;
+    border-radius: 50%; background: #fff;
+    border: 6px solid var(--destaque); display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 10px 30px rgba(0,0,0,.5); overflow: hidden; }
+  .selo img { width: 100%; height: 100%; object-fit: contain; padding: 22px; }
+
+  .conteudo { position: absolute; left: 90px; right: 90px;
+    top: {{ 790 if (imagens.foto and imagens.logo) else 720 }}px; text-align: center; }
+  .barra { width: 110px; height: 10px; border-radius: 5px; margin: 0 auto 36px;
+    background: linear-gradient(90deg, var(--azul-vivo), var(--destaque)); }
+  h1 { font-size: 76px; line-height: 1.1; font-weight: 800; letter-spacing: -1px; }
+  h1 .realce { color: var(--destaque); }
+  p { margin-top: 28px; font-size: 36px; line-height: 1.35; opacity: .88; }
+
+  .rodape { position: absolute; left: 90px; right: 90px; bottom: 60px; padding-top: 22px;
+    border-top: 2px solid var(--ardosia); text-align: center;
+    font-size: 30px; font-weight: 700; color: #b9bec7; }
+</style>
+</head>
+<body>
+  <div class="sombra"></div>
+  {% if imagens.foto %}<div class="foto"></div>{% endif %}
+  {% if imagens.logo %}<div class="selo"><img src="{{ imagens.logo }}"></div>{% endif %}
+  <div class="conteudo">
+    <div class="barra"></div>
+    {% set partes = post.titulo.rsplit(' ', 1) %}
+    <h1>{% if partes|length > 1 %}{{ partes[0] }} <span class="realce">{{ partes[1] }}</span>{% else %}<span class="realce">{{ post.titulo }}</span>{% endif %}</h1>
+    <p>{{ post.subtitulo }}</p>
+  </div>
+  <div class="rodape">{{ marca }}{% if total %} &nbsp;•&nbsp; <span style="color:#38C95D">Arraste →</span>{% endif %}</div>
+</body>
+</html>

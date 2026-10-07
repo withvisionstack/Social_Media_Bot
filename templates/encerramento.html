@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --azul-profundo: #031231; --azul-escuro: #07264d; --ardosia: #2d374d;
+    --preto-azulado: #0c0c13; --destaque: #38C95D; --azul-vivo: #0F57DB;
+  }
+  * { margin: 0; box-sizing: border-box; }
+  body {
+    width: {{ w }}px; height: {{ h }}px; overflow: hidden; position: relative;
+    font-family: 'Poppins', sans-serif; color: #fff;
+    background: var(--preto-azulado){% if imagens.fundo %} url('{{ imagens.fundo }}') center / cover{% endif %};
+  }
+  .sombra { position: absolute; inset: 0;
+    background: linear-gradient(to bottom, rgba(3,18,49,.88), rgba(7,38,77,.92) 50%, rgba(3,18,49,.98)); }
+
+  .centro { position: absolute; inset: 0; padding: 0 100px;
+    display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
+
+  .selo { width: 230px; height: 230px; border-radius: 50%; background: #fff;
+    border: 8px solid var(--destaque); display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 20px 50px rgba(0,0,0,.5); margin-bottom: 70px; overflow: hidden; }
+  .selo img { width: 100%; height: 100%; object-fit: contain; padding: 36px; }
+
+  h1 { font-size: 84px; line-height: 1.1; font-weight: 800; letter-spacing: -1px; }
+  h1 .realce { color: var(--destaque); }
+  .sub { margin-top: 32px; font-size: 40px; line-height: 1.35; opacity: .88; }
+
+  .botao { margin-top: 64px; padding: 28px 70px; border-radius: 100px;
+    font-size: 44px; font-weight: 700; color: #fff;
+    background: linear-gradient(90deg, var(--azul-vivo), var(--destaque));
+    box-shadow: 0 16px 40px rgba(15,87,219,.45); }
+
+  .contatos { margin-top: 56px; font-size: 32px; line-height: 1.7; color: #b9bec7; font-weight: 600; }
+
+  .rodape { position: absolute; left: 90px; right: 90px; bottom: 60px; padding-top: 22px;
+    border-top: 2px solid var(--ardosia); text-align: center;
+    font-size: 30px; font-weight: 700; color: #b9bec7; }
+</style>
+</head>
+<body>
+  <div class="sombra"></div>
+  <div class="centro">
+    {% if imagens.logo %}<div class="selo"><img src="{{ imagens.logo }}"></div>{% endif %}
+    {% set partes = post.titulo.rsplit(' ', 1) %}
+    <h1>{% if partes|length > 1 %}{{ partes[0] }} <span class="realce">{{ partes[1] }}</span>{% else %}<span class="realce">{{ post.titulo }}</span>{% endif %}</h1>
+    <div class="sub">{{ post.subtitulo }}</div>
+    <div class="botao">{{ post.botao }} 👆</div>
+    {% if post.contatos %}
+    <div class="contatos">{% for c in post.contatos %}{{ c }}<br>{% endfor %}</div>
+    {% endif %}
+  </div>
+  <div class="rodape">{{ marca }}</div>
+</body>
+</html>
